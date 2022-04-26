@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <title>Tasks</title>
+    {% load static %}
+    <script src="{%static 'js/index.js' %}"></script>
+    {% include "core/bootstrap.html" %}
+    <link rel="stylesheet" href="{%static 'css/index.css' %}" />
+
+  </head>
+  <body>
+    {% include "core/nav.html" %}
+    <div class="container">
+      <div class="d-flex mt-5 mb-2 justify-content-between">
+        <h2 class="align-middle">Tasks</h2>
+        <a class="btn btn-primary" role="button" href="/tasks/create"
+          >Add Task</a
+        >
+      </div>
+      {% if not tasks %}
+    </p>There are no Tasks</p>
+      {% else %}
+      <table class="table table-bordered">
+        <tr>
+          <th scope="col" class="text-center">Description</th>
+          <th scope="col" class="text-center">Category</th>
+          <th scope="col" class="text-center">Completed?</th>
+          <th scope="col" class="text-center">Actions</th>
+        </tr>
+        {% for row in tasks %}
+        <tr>
+          <td class="align-middle">{{row.name}}</td>
+          <td class="text-center align-middle">{{row.category}}</td>
+          <td class="text-center align-middle">
+            <a class="btn btn-link" href="complete/{{row.id}}"
+              >{{row.is_completed}}</a
+            >
+          </td>
+          <td class="text-center align-middle">
+            <a class="btn btn-outlined btn-link" href="edit/{{row.id}}">
+              Edit
+            </a>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-toggle="modal"
+              data-target="#deleteModal"
+              id="{{row.id}}"
+              onclick="setId({{row.id}})"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% endif %}
+    </div>
+    <div
+      class="modal fade"
+      id="deleteModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="deleteModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete Task</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="color:black">Do you want to delete the task?</div>
+          <div class="modal-footer">
+            <form id="deleteForm" method="post">
+              {% csrf_token %}
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="submit"
+                class="btn btn-danger"
+                onclick="setFormAction()"
+              >
+                Delete
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -7,9 +7,13 @@ from django.contrib.auth.decorators import login_required
 from core.forms import  JoinForm, LoginForm
 
 # Create your views here.
-
+@login_required(login_url='/login/')
 def home(request):
-    return render(request,"test.html",{})
+    user = UserProfile.objects.get(id=request.user.id)
+    if((user.role.role_id is '2') or (user.role.role_id is '3') ):
+        return render(request,"staff/staff-home.html")
+    else:
+        return render(request,"client/client-home.html",{})
 
 def join(request):
     if (request.method == "POST"):
@@ -27,12 +31,47 @@ def join(request):
             # Save encrypted password to DB
             user.save()
             # Success! Redirect to home page.
-            return redirect("/admin")
+            return redirect("/login")
         else:
             page_data = { "join_form": join_form }
-            return render(request, 'join.html', page_data)
+            return render(request, 'auth/join.html', page_data)
 
     else:
         join_form = JoinForm()
         page_data = { "join_form": join_form }
-        return render(request, 'join.html',page_data)
+        return render(request, 'auth/join.html',page_data)
+
+def user_login(request):
+    if (request.method == 'POST'):
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            # First get the username and password supplied
+            username = login_form.cleaned_data["username"]
+            password = login_form.cleaned_data["password"]
+            # Django's built-in authentication function:
+            user = authenticate(username=username, password=password)
+            # If we have a user
+            if user:
+                #Check it the account is active
+                if user.is_active:
+                    # Log the user in.
+                    login(request,user)
+                    # Send the user back to homepage
+                    return redirect("/")
+                else:
+                    # If account is not active:
+                    return HttpResponse("Your account is not active.")
+            else:
+                print("Someone tried to login and failed.")
+                print("They used username: {} and password: {}".format(username,password))
+                return render(request, 'auth/login.html', {"login_form": LoginForm})
+    else:
+        #Nothing has been provided for username or password.
+        return render(request, 'auth/login.html', {"login_form": LoginForm})
+
+@login_required(login_url='/login/')
+def user_logout(request):
+    # Log out the user.
+    logout(request)
+    # Return to homepage.
+    return redirect("/")

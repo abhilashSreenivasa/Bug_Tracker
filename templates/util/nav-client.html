@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-md navbar-expand-lg navbar-light bg-dark" >
+    <a class="navbar-brand" href="/" style="color:white;">Bugtracker</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="" style="color:white;">My Bugs</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/about/" style="color:white;">About</a>
+        </li>
+         {% if user.is_authenticated %}
+          <li>
+            <a class="nav-link" href="/logout/" style="color:white;">Logout -> {{user.username}}</a>
+          </li>
+        {% else %}
+          <li>
+            <a class="nav-link" href="/login/" style="color:white;">Login</a>
+          </li>
+        {% endif %}
+    
+    </div>
+  </nav>

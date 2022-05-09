@@ -1,3 +1,4 @@
+from tkinter import CASCADE
 from django.db import models
 from core.models import UserProfile
 
@@ -15,10 +16,15 @@ class BugStatus(models.Model):
     bug_status=models.CharField(max_length=20)
 
 class Bug(models.Model):
-     bug_id=models.CharField(max_length=5,primary_key=True)
+     bug_id=models.AutoField(primary_key=True)
      bug_type=models.ForeignKey(BugType, on_delete=models.CASCADE )
      bug_priority=models.ForeignKey(BugPriority,on_delete=models.CASCADE)
      bug_desc=models.CharField(max_length=280)
      bug_owner=models.ForeignKey(UserProfile, on_delete=models.CASCADE , default='2')
      bug_status=models.ForeignKey(BugStatus, on_delete=models.CASCADE, default='1')
-     
+
+class BugHistory(models.Model):
+    bug=models.ForeignKey(Bug, on_delete=models.CASCADE)
+    creator=models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    
+

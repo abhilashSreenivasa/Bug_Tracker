@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from core import views as core_views
+from bugs import views as bug_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +24,6 @@ urlpatterns = [
     path('join/',core_views.join),
     path('login/',core_views.user_login),
     path('logout/',core_views.user_logout),
+    path('raiseTicket/',bug_views.raise_ticket)
 
 ]

@@ -1,0 +1,32 @@
+<html>
+  <head>
+    {% include "util/bootstrap.html" %}
+  </head>
+  <body>
+    {% include "util/nav-client.html" %}
+
+    <h1>My Tickets</h1>
+    <table>
+
+    <tr>
+        <th>Type</th>
+        <th>Priority</th>
+        <th>Owner</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+
+    {% for data in page_data %}
+    <tr>
+        <td>{{ data.bug.bug_type.bug_type}}</td>
+        <td>{{ data.bug.bug_priority.bug_priority }}</td>
+        <td>{{ data.bug.bug_owner.username }}</td>
+        <td>{{ data.bug.bug_desc }}</td>
+        <td>{{ data.bug.bug_status.bug_status }}</td>
+
+    </tr>
+    {% endfor %}
+    </table>
+  </body>
+</html>

@@ -1,4 +1,5 @@
 from core.models import UserProfile,Role
+from bugs.models import Bug,BugHistory,BugPriority,BugStatus,BugType
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -13,7 +14,22 @@ def home(request):
     if((user.role.role_id is '2') or (user.role.role_id is '3') ):
         return render(request,"staff/staff-home.html")
     else:
-        return render(request,"client/client-home.html",{})
+        userBugs=[]
+        data=[]
+        listOfBugs=[]
+        userBugs=BugHistory.objects.filter(creator=request.user)
+        for b in userBugs:
+            listOfBugs.append(b.bug)
+       
+
+        new=[x for x in listOfBugs if x.bug_status.bug_status_id == '1'] 
+        open=[x for x in listOfBugs if x.bug_status.bug_status_id  == '2']
+        inProgress=[x for x in listOfBugs if x.bug_status.bug_status_id  == '3']
+        closed=[x for x in listOfBugs if x.bug_status.bug_status_id  == '4']
+        cancelled=[x for x in listOfBugs if x.bug_status.bug_status_id  == '5']
+        data=[len(new),len(open),len(inProgress),len(closed),len(cancelled)]
+        print(data)
+        return render(request,"client/client-home.html",{'data':data})
 
 def join(request):
     if (request.method == "POST"):
@@ -26,8 +42,8 @@ def join(request):
             user.email=join_form.cleaned_data['email']
             user.set_password(join_form.cleaned_data['password'])
             role_id=''+join_form.cleaned_data['role']
-            print(role_id)
             user.role=Role.objects.get(role_id=role_id)
+            
             # Save encrypted password to DB
             user.save()
             # Success! Redirect to home page.

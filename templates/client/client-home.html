@@ -1,17 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% include "util/bootstrap.html" %}
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-   
+{% include "util/bootstrap.html" %}
+{% include "util/nav-client.html" %}
 
-</head>
-<body>
-    {% include "util/nav-client.html" %}
-    <h1>Welcome to bugtracker client</h1>
-    
-</body>
-</html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+<div class="container">
+    {% if not data %}
+  </p> No Ticket Data!</p>
+    {% else %}
+    <div class="row mt-5">
+      <div class="col-md-3 col-lg-3 col-xl-3 sm-6">
+        <canvas id="myChart" width="400" height="400"></canvas>
+      </div>
+      <div class="col-md-3 col-lg-3 col-xl-3 sm-6">
+      </div>
+      <div class="col-md-3 col-lg-3 col-xl-3 sm-6">
+        <canvas id="myChart1" width="400" height="400"></canvas>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+<script>
+const ctx = document.getElementById('myChart').getContext('2d');
+
+
+const myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['New', 'Open', 'In-Progress', 'Closed', 'Cancelled'],
+        datasets: [{
+            label: 'My tickets',
+            data: {{data|safe}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+            
+                beginAtZero: true
+            
+        }
+        },
+        responsive: false
+    }
+});
+
+
+
+
+
+
+
+
+
+const btx = document.getElementById('myChart1').getContext('2d');
+const myChart1 = new Chart(btx, {
+    type: 'bar',
+    data: {
+        labels: ['New', 'Open', 'In-Progress', 'Closed', 'Cancelled'],
+        datasets: [{
+            label: 'My tickets',
+            data: {{data|safe}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+           
+        },
+        responsive: false
+    }
+});
+</script>

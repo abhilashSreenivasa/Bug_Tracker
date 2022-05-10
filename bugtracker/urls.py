@@ -24,6 +24,8 @@ urlpatterns = [
     path('join/',core_views.join),
     path('login/',core_views.user_login),
     path('logout/',core_views.user_logout),
-    path('raiseTicket/',bug_views.raise_ticket)
+    path('raiseTicket/',bug_views.raise_ticket),
+    path('tickets/',bug_views.tickets)
+
 
 ]

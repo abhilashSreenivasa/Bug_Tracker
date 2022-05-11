@@ -34,19 +34,19 @@ for x in UserProfile.objects.all():
 
 
 class BugForm(forms.Form):
-    bug_type = forms.CharField(label='Choose bug type', widget=forms.Select(choices=bug_list))
+    bug_type = forms.CharField(label='Choose bug type', widget=forms.Select(choices=bug_list,attrs={'class': 'dropdown'}))
     bug_desc = forms.CharField(widget=forms.Textarea(attrs={'size': '280'}))
-    bug_priority = forms.CharField(label='Choose bug priority', widget=forms.Select(choices=priority_list))
+    bug_priority = forms.CharField(label='Choose bug priority', widget=forms.Select(choices=priority_list,attrs={'class': 'dropdown'}))
 
 
 class UpdateForm(forms.Form):
-    bug_type = forms.CharField(label='Change bug type', widget=forms.Select(choices=bug_list))
+    bug_type = forms.CharField(label='Change bug type', widget=forms.Select(choices=bug_list, attrs={'class': 'dropdown'}))
     bug_desc = forms.CharField(widget=forms.Textarea(attrs={'size': '280'}))
     bug_priority = forms.CharField(label='Change bug priority', widget=forms.Select(choices=priority_list))
-    bug_status = forms.CharField(label='Change bug status', widget=forms.Select(choices=status_list))
+    bug_status = forms.CharField(label='Change bug status', widget=forms.Select(choices=status_list,attrs={'class': 'dropdown'}))
 
 class AssignForm(forms.Form):
-    bug_owner = forms.CharField(label='Assign the ticket', widget=forms.Select(choices=staff_list))
+    bug_owner = forms.CharField(label='Assign the ticket', widget=forms.Select(choices=staff_list, attrs={'class': 'dropdown'}))
 
 
 

@@ -1,11 +1,18 @@
 <html>
   <head>
     {% include "util/bootstrap.html" %}
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'index.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   </head>
   <body>
     <div class="container">
       <div class = "jumbotron">
-        <h1>Login</h1>
+        <div class="heading-auth">
+          <label>Login</label> 
+          <i class="fa fa-bug" style="font-size:100px;color:red"></i>  
+        </div>
         <form action="/login/" method="POST">{% csrf_token %}
           <table>
             {{ login_form.as_table }}

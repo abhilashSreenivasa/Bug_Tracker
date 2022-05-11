@@ -17,6 +17,6 @@ class JoinForm(forms.Form):
     username=forms.CharField(widget=forms.TextInput(attrs={'size': '30'}))
     email = forms.CharField(widget=forms.TextInput(attrs={'size': '30'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}))
-    role= forms.CharField(label='Choose your role', widget=forms.Select(choices=role_list))
-
+    role= forms.CharField(label='Choose your role', widget=forms.Select(choices=role_list, attrs={'class': 'dropdown'}))
+    
    

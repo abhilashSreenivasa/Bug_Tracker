@@ -1,35 +1,49 @@
 <html>
   <head>
     {% include "util/bootstrap.html" %}
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'index.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   </head>
   <body>
     {% include "util/nav-staff.html" %}
 
-    <h1>My Tickets</h1>
-    <table>
-
+    <div class="heading">My Tickets</div>
+    <table class="table table-bordered">
+    <thead class="thead-dark">
     <tr>
-        <th>Type</th>
-        <th>Priority</th>
-        <th>Owner</th>
-        <th>Description</th>
-        <th>Current Status</th>
-        <th>Change Status</th>
+        <th scope="col">Type</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Owner</th>
+        <th scope="col">Description</th>
+        <th scope="col">Current Status</th>
+        <th scope="col">Change Status</th>
     </tr>
+    </thead>
 
     {% for data in page_data %}
+    <tbody>
     <tr>
         <td>{{ data.bug_type.bug_type}}</td>
-        <td>{{ data.bug_priority.bug_priority }}</td>
+        {% if data.bug_priority.bug_priority == 'Low' %}
+        <td style="color:rgb(8, 193, 8)">{{ data.bug_priority.bug_priority }}</td>
+        {% elif data.bug_priority.bug_priority == 'Medium' %}
+        <td style="color: rgb(238, 238, 6)">{{ data.bug_priority.bug_priority }}</td>
+        {% else %}
+        <td style="color:red">{{ data.bug_priority.bug_priority }}</td>
+        {% endif %}
         <td>{{ data.bug_owner.username }}</td>
         <td>{{ data.bug_desc }}</td>
         <td>{{ data.bug_status.bug_status }}</td>
         <td class="text-center align-middle">
-            <a class="btn btn-outlined btn-link" href="update/{{data.bug_id}}">
+            <a style="padding:0px" class="btn btn-outlined btn-link" href="update/{{data.bug_id}}">
               Update
         </a>
+        </td>
     </tr>
     {% endfor %}
     </table>
+    </tbody>
   </body>
 </html>

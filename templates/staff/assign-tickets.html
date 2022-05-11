@@ -1,21 +1,30 @@
 <html>
   <head>
     {% include "util/bootstrap.html" %}
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'index.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   </head>
   <body>
     <div class="container">
       <div class = "jumbotron">
-        <h1>Assign Tickets</h1>
+        <div class="heading-auth">
+            <label>Assign Tickets</label> 
+            <i class="fa fa-bug" style="font-size:100px;color:red"></i>  
+          </div>
         <form method="POST">{% csrf_token %}
             {{ assign_form.as_table }}
+         
             <tr>
+            <div class="combo-btns">
               <td>
               <input type="submit" class="btn btn-primary" value = "Update"/>
             </td>
             <td>
               <a class="btn btn-warning" href="/allTickets/"> Cancel </a>
             </td>
-          
+        </div>
           </tr>
           </table>
         </form>

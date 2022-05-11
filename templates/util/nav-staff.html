@@ -2,14 +2,16 @@
     <a class="navbar-brand" href="/" style="color:white;">Bugtracker</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
+        {% if user.role.role_id == '2' %}
         <li class="nav-item">
-          <a class="nav-link" href="" style="color:white;">Buggs</a>
+          <a class="nav-link" href="/allTickets/" style="color:white;">All Tickets</a>
         </li>
+        {% endif %}
         
-        <li class="nav-item">
-          <a class="nav-link" href="/about/" style="color:white;">About</a>
-        </li>
          {% if user.is_authenticated %}
+         <li class="nav-item">
+          <a class="nav-link" href="/myTickets/" style="color:white;">My Tickets</a>
+        </li>
           <li>
             <a class="nav-link" href="/logout/" style="color:white;">Logout {{user.username}}</a>
           </li>

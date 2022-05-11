@@ -27,9 +27,15 @@ def home(request):
         inProgress=[x for x in listOfBugs if x.bug_status.bug_status_id  == '3']
         closed=[x for x in listOfBugs if x.bug_status.bug_status_id  == '4']
         cancelled=[x for x in listOfBugs if x.bug_status.bug_status_id  == '5']
-        data=[len(new),len(open),len(inProgress),len(closed),len(cancelled)]
-        print(data)
-        return render(request,"client/client-home.html",{'data':data})
+        
+        currentData=[len(new),len(open),len(inProgress)]
+        historyData=[len(closed),len(cancelled)]
+        data=currentData+historyData
+        return render(request,"client/client-home.html",
+        {'data':data, 
+        'historyData':historyData,
+         'currentData':currentData
+        })
 
 def join(request):
     if (request.method == "POST"):

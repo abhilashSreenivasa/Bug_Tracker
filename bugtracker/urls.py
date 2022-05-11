@@ -25,7 +25,13 @@ urlpatterns = [
     path('login/',core_views.user_login),
     path('logout/',core_views.user_logout),
     path('raiseTicket/',bug_views.raise_ticket),
-    path('tickets/',bug_views.tickets)
+    path('tickets/',bug_views.tickets),
+    path('myTickets/',bug_views.staff_tickets),
+    path('myTickets/update/<int:id>/', bug_views.update_tickets),
+    path('allTickets/',bug_views.all_tickets),
+    path('allTickets/assign/<int:id>/', bug_views.assign_tickets),
+
+
 
 
 ]

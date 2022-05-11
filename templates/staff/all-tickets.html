@@ -1,0 +1,36 @@
+<html>
+  <head>
+    {% include "util/bootstrap.html" %}
+  </head>
+  <body>
+    {% include "util/nav-staff.html" %}
+
+    <h1>All Tickets</h1>
+    <table>
+
+    <tr>
+        <th>Type</th>
+        <th>Priority</th>
+        <th>Owner</th>
+        <th>Description</th>
+        <th>Current Status</th>
+        <th>Assign Ticket</th>
+    </tr>
+
+    {% for data in page_data %}
+    <tr>
+        <td>{{ data.bug_type.bug_type}}</td>
+        <td>{{ data.bug_priority.bug_priority }}</td>
+        <td>{{ data.bug_owner.username }}</td>
+        <td>{{ data.bug_desc }}</td>
+        <td>{{ data.bug_status.bug_status }}</td>
+        <td class="text-center align-middle">
+            <a class="btn btn-outlined btn-link" href="assign/{{data.bug_id}}">
+              Assign Ticket
+        </a>
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+  </body>
+</html>

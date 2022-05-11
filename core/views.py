@@ -12,12 +12,60 @@ from core.forms import  JoinForm, LoginForm
 def home(request):
     user = UserProfile.objects.get(id=request.user.id)
     if((user.role.role_id is '2') or (user.role.role_id is '3') ):
-        return render(request,"staff/staff-home.html")
+        userBugs=[]
+        data=[]
+        listOfBugs=[]
+        userBugs=Bug.objects.filter(bug_owner=request.user)
+
+        for b in userBugs:
+            print(b)
+            listOfBugs.append(b)
+       
+
+        new=[x for x in listOfBugs if x.bug_status.bug_status_id == '1'] 
+        open=[x for x in listOfBugs if x.bug_status.bug_status_id  == '2']
+        inProgress=[x for x in listOfBugs if x.bug_status.bug_status_id  == '3']
+        closed=[x for x in listOfBugs if x.bug_status.bug_status_id  == '4']
+        cancelled=[x for x in listOfBugs if x.bug_status.bug_status_id  == '5']
+        
+        
+
+        #--------------------------------
+        allBugs=[]
+        listOfBugsAll=[]
+        allBugs=Bug.objects.filter()
+        for b in allBugs:
+            listOfBugsAll.append(b)
+        
+        newAll=[x for x in listOfBugsAll if x.bug_status.bug_status_id == '1'] 
+        openAll=[x for x in listOfBugsAll if x.bug_status.bug_status_id  == '2']
+        inProgressAll=[x for x in listOfBugsAll if x.bug_status.bug_status_id  == '3']
+        closedAll=[x for x in listOfBugsAll if x.bug_status.bug_status_id  == '4']
+        cancelledAll=[x for x in listOfBugsAll if x.bug_status.bug_status_id  == '5']
+
+        currentData=[]
+        historyData=[]
+        if user.role.role_id is '3':
+            currentData=[len(new),len(open),len(inProgress)]
+            historyData=[len(closed),len(cancelled)]
+            data=currentData+historyData
+        else:
+            currentData=[len(newAll),len(openAll),len(inProgressAll)]
+            historyData=[len(closedAll),len(cancelledAll)]
+            data=currentData+historyData
+        return render(request,"staff/staff-home.html",
+        {
+        'data':data, 
+        'historyData':historyData,
+        'currentData':currentData
+        })
+
     else:
         userBugs=[]
         data=[]
         listOfBugs=[]
         userBugs=BugHistory.objects.filter(creator=request.user)
+
         for b in userBugs:
             listOfBugs.append(b.bug)
        
@@ -30,6 +78,7 @@ def home(request):
         
         currentData=[len(new),len(open),len(inProgress)]
         historyData=[len(closed),len(cancelled)]
+
         data=currentData+historyData
         return render(request,"client/client-home.html",
         {'data':data, 

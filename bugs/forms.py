@@ -32,7 +32,6 @@ for x in UserProfile.objects.all():
     if x.role.role_id=='2' or x.role.role_id=='3':
         staff_list.append((x.id,x.username))
 
-print(staff_list)
 
 class BugForm(forms.Form):
     bug_type = forms.CharField(label='Choose bug type', widget=forms.Select(choices=bug_list))

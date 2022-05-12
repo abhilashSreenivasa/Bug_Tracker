@@ -4,15 +4,15 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from bugs.forms import BugForm,UpdateForm,AssignForm
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
-
+@login_required(login_url='/login/')
 def tickets(request):
     page_data=BugHistory.objects.filter(creator=request.user)
     return render(request, 'client/tickets.html', {'page_data':page_data})
 
-
+@login_required(login_url='/login/')
 def raise_ticket(request):
     if (request.method == "POST"):
         bug_form = BugForm(request.POST)
@@ -51,10 +51,14 @@ def raise_ticket(request):
         page_data = { "bug_form": bug_form }
         return render(request, 'client/raise-ticket.html',page_data)
 
+
+@login_required(login_url='/login/')
 def staff_tickets(request):
     page_data=Bug.objects.filter(bug_owner=request.user)
     return render(request, 'staff/staff-tickets.html', {'page_data':page_data})
 
+
+@login_required(login_url='/login/')
 def update_tickets(request,id):
     if request.method == "GET":
             bug = Bug.objects.get(bug_id=id)
@@ -78,10 +82,13 @@ def update_tickets(request,id):
                 page_data = {"update_form": update_form}
                 return render(request, 'staff/update-tickets.html', page_data)
 
+@login_required(login_url='/login/')
 def all_tickets(request):
     page_data=Bug.objects.all()
     return render(request, 'staff/all-tickets.html', {'page_data':page_data})
 
+
+@login_required(login_url='/login/')
 def assign_tickets(request,id):
     if request.method =="GET":
         bug=Bug.objects.get(bug_id=id)

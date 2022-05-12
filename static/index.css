@@ -1,7 +1,7 @@
 html, body{
     background-color: black;
     color: white;
-   
+    max-width: 100%;
 }
 
 tr{
@@ -72,4 +72,22 @@ form{
 .combo-btns{
     margin-top: 7px;
     margin-bottom: 7px;
+}
+
+#data-table_filter{
+    display: flex;
+justify-content: right;
+}
+#data-table_paginate{
+    display: flex;
+justify-content: right;
+}
+#data-table_previous{
+    background-color: black;
+}
+.pagination #data-table_next{
+    background-color: black;
+}
+.row{
+    max-width: 100%;
 }

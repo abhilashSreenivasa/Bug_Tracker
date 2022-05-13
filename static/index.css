@@ -1,7 +1,6 @@
 html, body{
     background-color: black;
     color: white;
-    max-width: 100%;
 }
 
 tr{
@@ -90,4 +89,6 @@ justify-content: right;
 }
 .row{
     max-width: 100%;
+    margin-right: 5px;
+    margin-left: 5px;
 }

@@ -8,7 +8,4 @@
 Project Demonstration link : 
 https://www.youtube.com/watch?v=gbjwrmpLYGo
 
-Project Link:
-http://104.196.253.202/login/?next=/
-
 Feel free to contribute. 
